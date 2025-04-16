@@ -12,25 +12,41 @@ st.set_page_config(
     page_title="GOLDBUDDY - AI Trading Dashboard",
     page_icon="🏆",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
+    menu_items={
+        'Get Help': 'https://github.com/fisapool/goldbuddy',
+        'Report a bug': 'https://github.com/fisapool/goldbuddy/issues',
+        'About': 'GOLDBUDDY - Your AI-Powered Gold Trading Companion'
+    }
 )
 
-# Custom CSS for logo and styling
+# Custom CSS for responsive design
 st.markdown("""
 <style>
+    /* Responsive container */
+    .main .block-container {
+        padding-top: 1rem;
+        padding-right: 1rem;
+        padding-left: 1rem;
+        padding-bottom: 1rem;
+        max-width: 100%;
+    }
+    
     /* Logo and header styling */
     .logo-container {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 2rem 0;
+        padding: 1.5rem 1rem;
         background: linear-gradient(90deg, #FFFFFF, #F8F9FA);
         border-radius: 10px;
-        margin-bottom: 2rem;
+        margin: 0.5rem 0;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        flex-wrap: wrap;
     }
+    
     .logo-text {
-        font-size: 3.5rem;
+        font-size: clamp(2rem, 5vw, 3.5rem);
         font-weight: 800;
         background: linear-gradient(120deg, #FFD700, #FFA500);
         -webkit-background-clip: text;
@@ -38,123 +54,138 @@ st.markdown("""
         text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         font-family: 'Arial Black', sans-serif;
         letter-spacing: 2px;
+        text-align: center;
+        width: 100%;
     }
+    
     .logo-subtitle {
-        font-size: 1.2rem;
+        font-size: clamp(1rem, 2vw, 1.2rem);
         color: #000000;
         text-align: center;
-        margin-top: -1rem;
+        width: 100%;
+        margin-top: 0.5rem;
         font-style: italic;
     }
+    
     .gold-icon {
-        font-size: 2.5rem;
-        margin: 0 1rem;
+        font-size: clamp(1.5rem, 3vw, 2.5rem);
+        margin: 0 0.5rem;
     }
-    /* Light theme styles */
-    .main {
-        max-width: 1200px;
-        padding: 2rem;
-        background-color: #FFFFFF;
+    
+    /* Responsive grid system */
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin: 1rem 0;
     }
-    .stMetric {
-        font-size: 24px !important;
-        background-color: #F8F9FA !important;
-        border-radius: 8px !important;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+    
+    /* Card styling */
+    .metric-card {
+        background: #FFFFFF;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s;
     }
-    .stMetric > div {
-        font-size: 36px !important;
-        font-weight: bold !important;
-        color: #000000 !important;
+    
+    .metric-card:hover {
+        transform: translateY(-2px);
     }
-    h1, h2, h3, h4, h5, h6 {
-        color: #000000 !important;
-    }
+    
+    /* Responsive text sizing */
     h1 {
-        font-size: 48px !important;
+        font-size: clamp(2rem, 4vw, 3rem) !important;
         font-weight: bold !important;
-        margin-bottom: 2rem !important;
+        margin-bottom: 1rem !important;
+        color: #000000 !important;
+        line-height: 1.2 !important;
     }
+    
     h2 {
-        font-size: 36px !important;
-        margin-top: 2rem !important;
+        font-size: clamp(1.5rem, 3vw, 2.25rem) !important;
+        margin-top: 1.5rem !important;
+        color: #000000 !important;
+        line-height: 1.3 !important;
     }
+    
     h3 {
-        font-size: 28px !important;
+        font-size: clamp(1.25rem, 2.5vw, 1.75rem) !important;
+        color: #000000 !important;
+        line-height: 1.4 !important;
     }
+    
     p, li {
-        font-size: 18px !important;
+        font-size: clamp(1rem, 1.5vw, 1.125rem) !important;
         line-height: 1.6 !important;
         color: #000000 !important;
     }
-    .stSelectbox label {
-        font-size: 18px !important;
+    
+    /* Responsive metrics */
+    .stMetric {
+        background-color: #F8F9FA !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+        padding: 0.75rem !important;
+        height: 100% !important;
+    }
+    
+    .stMetric > div {
+        font-size: clamp(1.25rem, 2vw, 1.5rem) !important;
+        font-weight: bold !important;
         color: #000000 !important;
     }
-    .stCheckbox label {
-        font-size: 18px !important;
-        color: #000000 !important;
-    }
-    .stSlider label {
-        font-size: 18px !important;
-        color: #000000 !important;
-    }
-    /* Card styling */
-    div[data-testid="stMetricValue"] {
-        background-color: #FFFFFF !important;
-        color: #000000 !important;
-    }
-    div.element-container {
-        background-color: #FFFFFF !important;
-    }
-    /* Plot styling */
+    
+    /* Responsive charts */
     .js-plotly-plot {
-        background-color: #FFFFFF !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 300px !important;
     }
-    /* Sidebar styling */
-    section[data-testid="stSidebar"] {
-        background-color: #F8F9FA !important;
-    }
-    section[data-testid="stSidebar"] .stMarkdown {
-        color: #000000 !important;
-    }
-    /* Button styling */
-    .stButton button {
-        background-color: #FFD700 !important;
-        color: #000000 !important;
-        border: none !important;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
-    }
-    /* Table styling */
+    
+    /* Responsive tables */
     .dataframe {
-        background-color: #FFFFFF !important;
-        color: #000000 !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+        font-size: clamp(0.875rem, 1.2vw, 1rem) !important;
     }
-    .dataframe th {
-        background-color: #F8F9FA !important;
-        color: #000000 !important;
+    
+    /* Responsive buttons */
+    .stButton > button {
+        width: 100% !important;
+        padding: 0.5rem 1rem !important;
+        font-size: clamp(0.875rem, 1.2vw, 1rem) !important;
     }
-    /* Additional text color overrides */
-    .stMarkdown {
-        color: #000000 !important;
+    
+    /* Responsive sidebar */
+    section[data-testid="stSidebar"] {
+        min-width: 200px !important;
+        max-width: 100% !important;
     }
-    .stSubheader {
-        color: #000000 !important;
+    
+    section[data-testid="stSidebar"] .stMarkdown {
+        font-size: clamp(0.875rem, 1.2vw, 1rem) !important;
     }
-    .stText {
-        color: #000000 !important;
-    }
-    .stTitle {
-        color: #000000 !important;
+    
+    /* Mobile optimizations */
+    @media screen and (max-width: 768px) {
+        .main .block-container {
+            padding: 0.5rem;
+        }
+        
+        .grid-container {
+            grid-template-columns: 1fr;
+        }
+        
+        .stMetric {
+            margin-bottom: 0.5rem !important;
+        }
+        
+        section[data-testid="stSidebar"] {
+            width: 100% !important;
+        }
     }
 </style>
-
-<div class="logo-container">
-    <span class="gold-icon">🏆</span>
-    <span class="logo-text">GOLDBUDDY</span>
-    <span class="gold-icon">💰</span>
-</div>
-<div class="logo-subtitle">Your AI-Powered Gold Trading Companion</div>
 """, unsafe_allow_html=True)
 
 # Set default theme to Light
@@ -248,9 +279,9 @@ if currency != "USD":
 # Display title and description
 st.title("Gold Trading Dashboard")
 st.markdown("""
-<div style='background-color: #f0f2f6; padding: 20px; border-radius: 10px; margin-bottom: 20px;'>
-    <h4>Welcome to the Gold Trading Dashboard</h4>
-    <p>This dashboard provides real-time analysis and trading insights for gold (XAU/USD). 
+<div style='background-color: #f0f2f6; padding: 1rem; border-radius: 10px; margin: 1rem 0;'>
+    <h4 style='margin-top: 0;'>Welcome to the Gold Trading Dashboard</h4>
+    <p style='margin-bottom: 0;'>This dashboard provides real-time analysis and trading insights for gold (XAU/USD). 
     Monitor market trends, analyze sentiment data, and make informed trading decisions.</p>
 </div>
 """, unsafe_allow_html=True)
