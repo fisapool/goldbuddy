@@ -41,7 +41,7 @@ st.markdown("""
     }
     .logo-subtitle {
         font-size: 1.2rem;
-        color: #B8860B;
+        color: #000000;
         text-align: center;
         margin-top: -1rem;
         font-style: italic;
@@ -65,43 +65,44 @@ st.markdown("""
     .stMetric > div {
         font-size: 36px !important;
         font-weight: bold !important;
-        color: #1E1E1E !important;
+        color: #000000 !important;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        color: #000000 !important;
     }
     h1 {
         font-size: 48px !important;
         font-weight: bold !important;
         margin-bottom: 2rem !important;
-        color: #1E1E1E !important;
     }
     h2 {
         font-size: 36px !important;
         margin-top: 2rem !important;
-        color: #1E1E1E !important;
     }
     h3 {
         font-size: 28px !important;
-        color: #1E1E1E !important;
     }
     p, li {
         font-size: 18px !important;
         line-height: 1.6 !important;
-        color: #1E1E1E !important;
+        color: #000000 !important;
     }
     .stSelectbox label {
         font-size: 18px !important;
-        color: #1E1E1E !important;
+        color: #000000 !important;
     }
     .stCheckbox label {
         font-size: 18px !important;
-        color: #1E1E1E !important;
+        color: #000000 !important;
     }
     .stSlider label {
         font-size: 18px !important;
-        color: #1E1E1E !important;
+        color: #000000 !important;
     }
     /* Card styling */
     div[data-testid="stMetricValue"] {
         background-color: #FFFFFF !important;
+        color: #000000 !important;
     }
     div.element-container {
         background-color: #FFFFFF !important;
@@ -115,21 +116,36 @@ st.markdown("""
         background-color: #F8F9FA !important;
     }
     section[data-testid="stSidebar"] .stMarkdown {
-        color: #1E1E1E !important;
+        color: #000000 !important;
     }
     /* Button styling */
     .stButton button {
         background-color: #FFD700 !important;
-        color: #1E1E1E !important;
+        color: #000000 !important;
         border: none !important;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
     }
     /* Table styling */
     .dataframe {
         background-color: #FFFFFF !important;
+        color: #000000 !important;
     }
     .dataframe th {
         background-color: #F8F9FA !important;
+        color: #000000 !important;
+    }
+    /* Additional text color overrides */
+    .stMarkdown {
+        color: #000000 !important;
+    }
+    .stSubheader {
+        color: #000000 !important;
+    }
+    .stText {
+        color: #000000 !important;
+    }
+    .stTitle {
+        color: #000000 !important;
     }
 </style>
 
