@@ -30,6 +30,7 @@ st.markdown("""
         padding-left: 1rem;
         padding-bottom: 1rem;
         max-width: 100%;
+        background-color: #FFFFFF;
     }
     
     /* Logo and header styling */
@@ -38,10 +39,10 @@ st.markdown("""
         align-items: center;
         justify-content: center;
         padding: 1.5rem 1rem;
-        background: linear-gradient(90deg, #FFFFFF, #F8F9FA);
+        background: #FFFFFF;
         border-radius: 10px;
         margin: 0.5rem 0;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         flex-wrap: wrap;
     }
     
@@ -123,7 +124,7 @@ st.markdown("""
     
     /* Responsive metrics */
     .stMetric {
-        background-color: #F8F9FA !important;
+        background-color: #FFFFFF !important;
         border-radius: 8px !important;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
         padding: 0.75rem !important;
@@ -141,6 +142,7 @@ st.markdown("""
         width: 100% !important;
         height: auto !important;
         min-height: 300px !important;
+        background-color: #FFFFFF !important;
     }
     
     /* Responsive tables */
@@ -148,6 +150,11 @@ st.markdown("""
         width: 100% !important;
         overflow-x: auto !important;
         font-size: clamp(0.875rem, 1.2vw, 1rem) !important;
+        background-color: #FFFFFF !important;
+    }
+    
+    .dataframe th {
+        background-color: #FFFFFF !important;
     }
     
     /* Responsive buttons */
@@ -155,12 +162,17 @@ st.markdown("""
         width: 100% !important;
         padding: 0.5rem 1rem !important;
         font-size: clamp(0.875rem, 1.2vw, 1rem) !important;
+        background-color: #FF4B4B !important;
+        color: #FFFFFF !important;
+        border: none !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
     }
     
     /* Responsive sidebar */
     section[data-testid="stSidebar"] {
         min-width: 200px !important;
         max-width: 100% !important;
+        background-color: #FFFFFF !important;
     }
     
     section[data-testid="stSidebar"] .stMarkdown {
@@ -184,6 +196,33 @@ st.markdown("""
         section[data-testid="stSidebar"] {
             width: 100% !important;
         }
+    }
+    
+    /* Welcome box styling */
+    .welcome-box {
+        background-color: #FFFFFF !important;
+        padding: 1rem;
+        border-radius: 10px;
+        margin: 1rem 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Additional container styling */
+    div.element-container {
+        background-color: #FFFFFF !important;
+    }
+    
+    div[data-testid="stMetricValue"] {
+        background-color: #FFFFFF !important;
+    }
+    
+    /* Expander styling */
+    .streamlit-expanderHeader {
+        background-color: #FFFFFF !important;
+    }
+    
+    .streamlit-expanderContent {
+        background-color: #FFFFFF !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -279,9 +318,9 @@ if currency != "USD":
 # Display title and description
 st.title("Gold Trading Dashboard")
 st.markdown("""
-<div style='background-color: #f0f2f6; padding: 1rem; border-radius: 10px; margin: 1rem 0;'>
-    <h4 style='margin-top: 0;'>Welcome to the Gold Trading Dashboard</h4>
-    <p style='margin-bottom: 0;'>This dashboard provides real-time analysis and trading insights for gold (XAU/USD). 
+<div class="welcome-box">
+    <h4 style='margin-top: 0; color: #000000;'>Welcome to the Gold Trading Dashboard</h4>
+    <p style='margin-bottom: 0; color: #000000;'>This dashboard provides real-time analysis and trading insights for gold (XAU/USD). 
     Monitor market trends, analyze sentiment data, and make informed trading decisions.</p>
 </div>
 """, unsafe_allow_html=True)
