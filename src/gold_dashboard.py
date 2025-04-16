@@ -7,7 +7,7 @@ import numpy as np
 from datetime import datetime, timedelta
 import time
 
-# Initialize Streamlit page configuration with dark theme
+# Initialize Streamlit page configuration with light theme
 st.set_page_config(
     page_title="GOLDBUDDY - AI Trading Dashboard",
     page_icon="🏆",
@@ -24,9 +24,10 @@ st.markdown("""
         align-items: center;
         justify-content: center;
         padding: 2rem 0;
-        background: linear-gradient(90deg, #1E1E1E, #2D2D2D);
+        background: linear-gradient(90deg, #FFFFFF, #F8F9FA);
         border-radius: 10px;
         margin-bottom: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     .logo-text {
         font-size: 3.5rem;
@@ -34,7 +35,7 @@ st.markdown("""
         background: linear-gradient(120deg, #FFD700, #FFA500);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         font-family: 'Arial Black', sans-serif;
         letter-spacing: 2px;
     }
@@ -49,42 +50,86 @@ st.markdown("""
         font-size: 2.5rem;
         margin: 0 1rem;
     }
-    /* Rest of your existing styles */
+    /* Light theme styles */
     .main {
         max-width: 1200px;
         padding: 2rem;
+        background-color: #FFFFFF;
     }
     .stMetric {
         font-size: 24px !important;
+        background-color: #F8F9FA !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
     }
     .stMetric > div {
         font-size: 36px !important;
         font-weight: bold !important;
+        color: #1E1E1E !important;
     }
     h1 {
         font-size: 48px !important;
         font-weight: bold !important;
         margin-bottom: 2rem !important;
+        color: #1E1E1E !important;
     }
     h2 {
         font-size: 36px !important;
         margin-top: 2rem !important;
+        color: #1E1E1E !important;
     }
     h3 {
         font-size: 28px !important;
+        color: #1E1E1E !important;
     }
     p, li {
         font-size: 18px !important;
         line-height: 1.6 !important;
+        color: #1E1E1E !important;
     }
     .stSelectbox label {
         font-size: 18px !important;
+        color: #1E1E1E !important;
     }
     .stCheckbox label {
         font-size: 18px !important;
+        color: #1E1E1E !important;
     }
     .stSlider label {
         font-size: 18px !important;
+        color: #1E1E1E !important;
+    }
+    /* Card styling */
+    div[data-testid="stMetricValue"] {
+        background-color: #FFFFFF !important;
+    }
+    div.element-container {
+        background-color: #FFFFFF !important;
+    }
+    /* Plot styling */
+    .js-plotly-plot {
+        background-color: #FFFFFF !important;
+    }
+    /* Sidebar styling */
+    section[data-testid="stSidebar"] {
+        background-color: #F8F9FA !important;
+    }
+    section[data-testid="stSidebar"] .stMarkdown {
+        color: #1E1E1E !important;
+    }
+    /* Button styling */
+    .stButton button {
+        background-color: #FFD700 !important;
+        color: #1E1E1E !important;
+        border: none !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    }
+    /* Table styling */
+    .dataframe {
+        background-color: #FFFFFF !important;
+    }
+    .dataframe th {
+        background-color: #F8F9FA !important;
     }
 </style>
 
@@ -96,23 +141,11 @@ st.markdown("""
 <div class="logo-subtitle">Your AI-Powered Gold Trading Companion</div>
 """, unsafe_allow_html=True)
 
-# Add theme selector in sidebar
-st.sidebar.title("Display Settings")
-theme = st.sidebar.selectbox(
-    "Color Theme",
-    ["Light", "Dark"],
-    key="theme_select"
-)
-
-# Set theme colors based on selection
-if theme == "Dark":
-    background_color = "#1E1E1E"
-    text_color = "#FFFFFF"
-    card_background = "#2D2D2D"
-else:
-    background_color = "#FFFFFF"
-    text_color = "#000000"
-    card_background = "#F0F2F6"
+# Set default theme to Light
+theme = "Light"
+background_color = "#FFFFFF"
+text_color = "#1E1E1E"
+card_background = "#F8F9FA"
 
 # Apply theme colors
 st.markdown(f"""
@@ -126,6 +159,9 @@ st.markdown(f"""
     }}
     div.stMetric {{
         background-color: {card_background};
+    }}
+    .element-container {{
+        background-color: {background_color};
     }}
 </style>
 """, unsafe_allow_html=True)
