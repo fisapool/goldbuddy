@@ -29,257 +29,93 @@ st.markdown("""
         padding-right: 1rem;
         padding-left: 1rem;
         padding-bottom: 1rem;
-        max-width: 100%;
+        max-width: 100% !important;
+        width: 100% !important;
         background-color: #FFFFFF;
     }
-    
-    /* Logo and header styling */
-    .logo-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1.5rem 1rem;
-        background: #FFFFFF;
-        border-radius: 10px;
-        margin: 0.5rem 0;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        flex-wrap: wrap;
+
+    /* Adjust content when sidebar is closed */
+    [data-testid="stSidebar"][aria-expanded="false"] ~ .main .block-container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+        max-width: 100% !important;
+        width: 100% !important;
+        transition: padding 0.3s ease;
     }
-    
-    .logo-text {
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        font-weight: 800;
-        background: linear-gradient(120deg, #FFD700, #FFA500);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        font-family: 'Arial Black', sans-serif;
-        letter-spacing: 2px;
-        text-align: center;
-        width: 100%;
+
+    /* Adjust content when sidebar is open */
+    [data-testid="stSidebar"][aria-expanded="true"] ~ .main .block-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        transition: padding 0.3s ease;
     }
-    
-    .logo-subtitle {
-        font-size: clamp(1rem, 2vw, 1.2rem);
-        color: #000000;
-        text-align: center;
-        width: 100%;
-        margin-top: 0.5rem;
-        font-style: italic;
+
+    /* Make charts responsive */
+    .js-plotly-plot {
+        width: 100% !important;
     }
-    
-    .gold-icon {
-        font-size: clamp(1.5rem, 3vw, 2.5rem);
-        margin: 0 0.5rem;
-    }
-    
+
     /* Responsive grid system */
     .grid-container {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 1rem;
         margin: 1rem 0;
+        width: 100%;
     }
-    
-    /* Card styling */
-    .metric-card {
-        background: #FFFFFF;
-        padding: 1rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        transition: transform 0.2s;
+
+    /* Adjust metrics for better responsiveness */
+    [data-testid="stMetric"] {
+        width: 100%;
+        background-color: #FFFFFF;
     }
-    
-    .metric-card:hover {
-        transform: translateY(-2px);
-    }
-    
-    /* Responsive text sizing */
-    h1 {
-        font-size: clamp(2rem, 4vw, 3rem) !important;
-        font-weight: bold !important;
-        margin-bottom: 1rem !important;
-        color: #000000 !important;
-        line-height: 1.2 !important;
-    }
-    
-    h2 {
-        font-size: clamp(1.5rem, 3vw, 2.25rem) !important;
-        margin-top: 1.5rem !important;
-        color: #000000 !important;
-        line-height: 1.3 !important;
-    }
-    
-    h3 {
-        font-size: clamp(1.25rem, 2.5vw, 1.75rem) !important;
-        color: #000000 !important;
-        line-height: 1.4 !important;
-    }
-    
-    p, li {
-        font-size: clamp(1rem, 1.5vw, 1.125rem) !important;
-        line-height: 1.6 !important;
-        color: #000000 !important;
-    }
-    
-    /* Responsive metrics */
-    .stMetric {
-        background-color: #FFFFFF !important;
-        border-radius: 8px !important;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
-        padding: 0.75rem !important;
-        height: 100% !important;
-    }
-    
-    .stMetric > div {
-        font-size: clamp(1.25rem, 2vw, 1.5rem) !important;
-        font-weight: bold !important;
-        color: #000000 !important;
-    }
-    
-    /* Responsive charts */
-    .js-plotly-plot {
+
+    /* Responsive columns */
+    [data-testid="column"] {
         width: 100% !important;
-        height: auto !important;
-        min-height: 300px !important;
-        background-color: #FFFFFF !important;
+        flex: 1 1 auto !important;
     }
-    
+
+    /* Adjust header with confidence layout */
+    .header-confidence {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .header-confidence h1, 
+    .header-confidence h2, 
+    .header-confidence h3 {
+        margin: 0;
+        flex-grow: 1;
+    }
+
     /* Responsive tables */
     .dataframe {
         width: 100% !important;
-        overflow-x: auto !important;
-        font-size: clamp(0.875rem, 1.2vw, 1rem) !important;
-        background-color: #FFFFFF !important;
-    }
-    
-    .dataframe th {
-        background-color: #FFFFFF !important;
-    }
-    
-    /* Responsive buttons */
-    .stButton > button {
-        width: 100% !important;
-        padding: 0.5rem 1rem !important;
-        font-size: clamp(0.875rem, 1.2vw, 1rem) !important;
-        background-color: #FF4B4B !important;
-        color: #FFFFFF !important;
-        border: none !important;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
-    }
-    
-    /* Responsive sidebar */
-    section[data-testid="stSidebar"] {
-        min-width: 250px !important;
         max-width: 100% !important;
-        background-color: #FFFFFF !important;
-        padding: 1rem !important;
-        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05) !important;
     }
-    
-    section[data-testid="stSidebar"] .stMarkdown {
-        font-size: clamp(0.875rem, 1.2vw, 1rem) !important;
-    }
-    
-    /* Sidebar header styling */
-    section[data-testid="stSidebar"] h1, 
-    section[data-testid="stSidebar"] h2, 
-    section[data-testid="stSidebar"] h3, 
-    section[data-testid="stSidebar"] h4 {
-        color: #31333F !important;
-        margin-top: 1.5rem !important;
-        margin-bottom: 1rem !important;
-        font-weight: 600 !important;
-    }
-    
-    /* Sidebar widgets styling */
-    section[data-testid="stSidebar"] .stSelectbox,
-    section[data-testid="stSidebar"] .stSlider,
-    section[data-testid="stSidebar"] .stCheckbox {
-        background-color: #FFFFFF !important;
-        padding: 0.5rem !important;
-        border-radius: 6px !important;
-        margin: 0.5rem 0 !important;
-        border: 1px solid #E6E6E6 !important;
-    }
-    
-    /* Sidebar selectbox styling */
-    section[data-testid="stSidebar"] .stSelectbox > div > div {
-        background-color: #FFFFFF !important;
-        border: 1px solid #E6E6E6 !important;
-        border-radius: 4px !important;
-    }
-    
-    /* Sidebar slider styling */
-    section[data-testid="stSidebar"] .stSlider > div > div > div {
-        background-color: #FF4B4B !important;
-    }
-    
-    /* Sidebar checkbox styling */
-    section[data-testid="stSidebar"] .stCheckbox > label > div {
-        background-color: #FFFFFF !important;
-        border: 1px solid #E6E6E6 !important;
-    }
-    
-    section[data-testid="stSidebar"] .stCheckbox > label > div:hover {
-        border-color: #FF4B4B !important;
-    }
-    
-    /* Sidebar info box styling */
-    section[data-testid="stSidebar"] .stAlert {
-        background-color: #F8F9FA !important;
-        border: 1px solid #E6E6E6 !important;
-        border-radius: 6px !important;
-        padding: 0.75rem !important;
-        margin: 0.5rem 0 !important;
-    }
-    
-    /* Sidebar divider styling */
-    section[data-testid="stSidebar"] hr {
-        margin: 1.5rem 0 !important;
-        border-color: #E6E6E6 !important;
-    }
-    
-    /* Sidebar caption styling */
-    section[data-testid="stSidebar"] .stCaption {
-        color: #666666 !important;
-        font-size: 0.8rem !important;
-        margin-top: 0.25rem !important;
-    }
-    
-    /* Mobile optimizations */
+
+    /* Ensure charts don't overflow on mobile */
     @media screen and (max-width: 768px) {
-        section[data-testid="stSidebar"] {
-            width: 100% !important;
-            padding: 0.5rem !important;
+        .main .block-container {
+            padding: 1rem 0.5rem;
         }
-    }
-    
-    /* Welcome box styling */
-    .welcome-box {
-        background-color: #FFFFFF !important;
-        padding: 1rem;
-        border-radius: 10px;
-        margin: 1rem 0;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
-    
-    /* Additional container styling */
-    div.element-container {
-        background-color: #FFFFFF !important;
-    }
-    
-    div[data-testid="stMetricValue"] {
-        background-color: #FFFFFF !important;
-    }
-    
-    /* Expander styling */
-    .streamlit-expanderHeader {
-        background-color: #FFFFFF !important;
-    }
-    
-    .streamlit-expanderContent {
-        background-color: #FFFFFF !important;
+
+        [data-testid="stSidebar"][aria-expanded="false"] ~ .main .block-container {
+            padding: 1rem 0.5rem;
+        }
+
+        .js-plotly-plot {
+            padding: 0 !important;
+            min-height: 250px !important;
+        }
+
+        .grid-container {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
 """, unsafe_allow_html=True)
@@ -1182,48 +1018,54 @@ st.sidebar.markdown(f"""
 """, unsafe_allow_html=True)
 
 # Add confidence badges to main dashboard sections
-def confidence_badge(confidence, tooltip):
-    color = get_confidence_color(confidence)
-    label = get_confidence_label(confidence)
+def create_header_with_confidence(title, confidence, tooltip):
+    st.markdown(f"""
+    <div class="header-confidence">
+        <{title.startswith('Gold') and 'h1' or 'h3'}>{title}</{title.startswith('Gold') and 'h1' or 'h3'}>
+        <div style="min-width: 100px; text-align: right;">
+            {create_confidence_badge(confidence, tooltip)}
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+def create_confidence_badge(confidence, tooltip):
+    if confidence >= 0.8:
+        color = "#28a745"
+        label = "High"
+    elif confidence >= 0.6:
+        color = "#ffc107"
+        label = "Medium"
+    else:
+        color = "#dc3545"
+        label = "Low"
+    
     return f"""
-    <span style="
+    <div style="
         background-color: {color};
         color: white;
-        padding: 2px 8px;
+        padding: 4px 8px;
         border-radius: 12px;
-        font-size: 0.8em;
-        margin-left: 8px;
+        font-size: 0.9em;
+        display: inline-block;
         cursor: help;
     " title="{tooltip}">
-        {label} ({confidence:.0%})
-    </span>
+        {label} ({int(confidence * 100)}%)
+    </div>
     """
 
-# Update headers with confidence badges
-st.markdown(f"""
-# Gold Trading Dashboard {confidence_badge(price_confidence, "Real-time market data confidence")}
-""", unsafe_allow_html=True)
+# Replace the markdown headers with the new function
+create_header_with_confidence("Gold Trading Dashboard", price_confidence, "Real-time market data confidence")
 
-# Add confidence badges to other sections
 if show_technicals:
-    st.markdown(f"""
-    ### Technical Indicators {confidence_badge(technical_confidence, "Technical analysis data confidence")}
-    """, unsafe_allow_html=True)
+    create_header_with_confidence("Technical Indicators", technical_confidence, "Technical analysis data confidence")
 
 if show_news:
-    st.markdown(f"""
-    ### News Sentiment {confidence_badge(news_confidence, "News analysis confidence")}
-    """, unsafe_allow_html=True)
+    create_header_with_confidence("News Sentiment", news_confidence, "News analysis confidence")
 
 if risk_analysis:
-    st.markdown(f"""
-    ### Risk Analysis {confidence_badge(sentiment_confidence, "Risk metrics confidence")}
-    """, unsafe_allow_html=True)
+    create_header_with_confidence("Risk Analysis", sentiment_confidence, "Risk metrics confidence")
 
-# Update the position sizing section
-st.markdown(f"""
-### Position Sizing Recommendations {confidence_badge(position_confidence, "Position sizing calculation confidence")}
-""", unsafe_allow_html=True)
+create_header_with_confidence("Position Sizing Recommendations", position_confidence, "Position sizing calculation confidence")
 
 # Add data source information
 st.sidebar.markdown("---")
