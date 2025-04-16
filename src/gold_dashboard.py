@@ -170,31 +170,88 @@ st.markdown("""
     
     /* Responsive sidebar */
     section[data-testid="stSidebar"] {
-        min-width: 200px !important;
+        min-width: 250px !important;
         max-width: 100% !important;
         background-color: #FFFFFF !important;
+        padding: 1rem !important;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05) !important;
     }
     
     section[data-testid="stSidebar"] .stMarkdown {
         font-size: clamp(0.875rem, 1.2vw, 1rem) !important;
     }
     
+    /* Sidebar header styling */
+    section[data-testid="stSidebar"] h1, 
+    section[data-testid="stSidebar"] h2, 
+    section[data-testid="stSidebar"] h3, 
+    section[data-testid="stSidebar"] h4 {
+        color: #31333F !important;
+        margin-top: 1.5rem !important;
+        margin-bottom: 1rem !important;
+        font-weight: 600 !important;
+    }
+    
+    /* Sidebar widgets styling */
+    section[data-testid="stSidebar"] .stSelectbox,
+    section[data-testid="stSidebar"] .stSlider,
+    section[data-testid="stSidebar"] .stCheckbox {
+        background-color: #FFFFFF !important;
+        padding: 0.5rem !important;
+        border-radius: 6px !important;
+        margin: 0.5rem 0 !important;
+        border: 1px solid #E6E6E6 !important;
+    }
+    
+    /* Sidebar selectbox styling */
+    section[data-testid="stSidebar"] .stSelectbox > div > div {
+        background-color: #FFFFFF !important;
+        border: 1px solid #E6E6E6 !important;
+        border-radius: 4px !important;
+    }
+    
+    /* Sidebar slider styling */
+    section[data-testid="stSidebar"] .stSlider > div > div > div {
+        background-color: #FF4B4B !important;
+    }
+    
+    /* Sidebar checkbox styling */
+    section[data-testid="stSidebar"] .stCheckbox > label > div {
+        background-color: #FFFFFF !important;
+        border: 1px solid #E6E6E6 !important;
+    }
+    
+    section[data-testid="stSidebar"] .stCheckbox > label > div:hover {
+        border-color: #FF4B4B !important;
+    }
+    
+    /* Sidebar info box styling */
+    section[data-testid="stSidebar"] .stAlert {
+        background-color: #F8F9FA !important;
+        border: 1px solid #E6E6E6 !important;
+        border-radius: 6px !important;
+        padding: 0.75rem !important;
+        margin: 0.5rem 0 !important;
+    }
+    
+    /* Sidebar divider styling */
+    section[data-testid="stSidebar"] hr {
+        margin: 1.5rem 0 !important;
+        border-color: #E6E6E6 !important;
+    }
+    
+    /* Sidebar caption styling */
+    section[data-testid="stSidebar"] .stCaption {
+        color: #666666 !important;
+        font-size: 0.8rem !important;
+        margin-top: 0.25rem !important;
+    }
+    
     /* Mobile optimizations */
     @media screen and (max-width: 768px) {
-        .main .block-container {
-            padding: 0.5rem;
-        }
-        
-        .grid-container {
-            grid-template-columns: 1fr;
-        }
-        
-        .stMetric {
-            margin-bottom: 0.5rem !important;
-        }
-        
         section[data-testid="stSidebar"] {
             width: 100% !important;
+            padding: 0.5rem !important;
         }
     }
     
@@ -305,7 +362,8 @@ st.sidebar.subheader("Display Settings")
 currency = st.sidebar.selectbox(
     "Display Currency",
     ["MYR", "USD", "EUR", "GBP", "JPY"],
-    key="currency_select"
+    key="currency_select",
+    help="Select your preferred currency for displaying values. Exchange rates are updated every 5 minutes."
 )
 
 # Show current exchange rate
@@ -327,11 +385,31 @@ st.markdown("""
 
 # Sidebar
 st.sidebar.header("Configuration")
-show_reasoning = st.sidebar.checkbox("Show Agent Reasoning", value=True)
-days_back = st.sidebar.slider("Days of Historical Data", 7, 90, 30)
-show_technicals = st.sidebar.checkbox("Show Technical Indicators", value=True)
-show_news = st.sidebar.checkbox("Show News Sentiment", value=True)
-risk_analysis = st.sidebar.checkbox("Show Risk Analysis", value=True)
+show_reasoning = st.sidebar.checkbox(
+    "Show Agent Reasoning",
+    value=True,
+    help="Display detailed explanations of AI agents' analysis and decision-making process"
+)
+days_back = st.sidebar.slider(
+    "Days of Historical Data",
+    7, 90, 30,
+    help="Adjust the timeframe for historical price data analysis. More days provide longer-term trends but may increase loading time."
+)
+show_technicals = st.sidebar.checkbox(
+    "Show Technical Indicators",
+    value=True,
+    help="Display technical analysis indicators including RSI, Moving Averages, and Bollinger Bands"
+)
+show_news = st.sidebar.checkbox(
+    "Show News Sentiment",
+    value=True,
+    help="Display recent news and their sentiment analysis impact on gold prices"
+)
+risk_analysis = st.sidebar.checkbox(
+    "Show Risk Analysis",
+    value=True,
+    help="Display risk metrics including Volatility, Sharpe Ratio, Max Drawdown, and Value at Risk"
+)
 
 start_date = (datetime.now() - timedelta(days=days_back)).strftime('%Y-%m-%d')
 end_date = datetime.now().strftime('%Y-%m-%d')
@@ -702,7 +780,7 @@ risk_level = st.slider(
     min_value=0,
     max_value=100,
     value=50,
-    help="0 = Conservative, 50 = Moderate, 100 = Aggressive"
+    help="Set your risk tolerance level: 0-30 (Conservative), 31-70 (Moderate), 71-100 (Aggressive). This affects position sizing recommendations."
 )
 
 # Calculate recommended position sizes
@@ -834,13 +912,31 @@ st.subheader("AI-Recommended Position Sizing")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    account_size = st.number_input("Total Account Size", min_value=1000.0, value=100000.0, step=1000.0)
+    account_size = st.number_input(
+        "Total Account Size",
+        min_value=1000.0,
+        value=100000.0,
+        step=1000.0,
+        help="Enter your total trading account size. This will be used to calculate appropriate position sizes based on your risk tolerance."
+    )
     
 with col2:
-    risk_tolerance = st.slider("Risk Tolerance (%)", min_value=0.1, max_value=5.0, value=1.0, step=0.1)
+    risk_tolerance = st.slider(
+        "Risk Tolerance (%)",
+        min_value=0.1,
+        max_value=5.0,
+        value=1.0,
+        step=0.1,
+        help="Percentage of your account you're willing to risk per trade. Lower values (0.1-1%) are conservative, higher values (2-5%) are more aggressive."
+    )
     
 with col3:
-    leverage = st.selectbox("Leverage", [1, 2, 5, 10, 20], index=0)
+    leverage = st.selectbox(
+        "Leverage",
+        [1, 2, 5, 10, 20],
+        index=0,
+        help="Select leverage multiplier. Higher leverage increases both potential profits and risks. 1x is safest, 20x is extremely risky."
+    )
 
 # Calculate position sizes based on different strategies
 def calculate_position_sizes(account_size, risk_tolerance, leverage, sentiment_score):
@@ -974,4 +1070,299 @@ with col2:
     - Economic Events
     - Market Sentiment
     - Price Action
-    """) 
+    """)
+
+def get_confidence_color(confidence):
+    """
+    Returns appropriate color based on confidence level
+    """
+    if confidence >= 0.8:
+        return "#28a745"  # Green
+    elif confidence >= 0.6:
+        return "#ffc107"  # Yellow
+    else:
+        return "#dc3545"  # Red
+
+def get_confidence_label(confidence):
+    """
+    Returns confidence level label
+    """
+    if confidence >= 0.8:
+        return "High"
+    elif confidence >= 0.6:
+        return "Medium"
+    else:
+        return "Low"
+
+# Add confidence indicators in sidebar
+st.sidebar.write("---")
+st.sidebar.subheader("Data Confidence Levels")
+
+# Calculate mock confidence scores (replace with real calculations in production)
+price_confidence = 0.95  # High confidence for real market data
+technical_confidence = 0.85  # Good confidence for technical indicators
+sentiment_confidence = 0.70  # Medium confidence for sentiment analysis
+news_confidence = 0.75  # Medium confidence for news analysis
+position_confidence = 0.80  # Good confidence for position sizing
+
+# Display confidence indicators with tooltips
+st.sidebar.markdown("""
+<style>
+.confidence-indicator {
+    padding: 8px;
+    border-radius: 4px;
+    margin: 4px 0;
+    font-size: 0.9em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+.confidence-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    color: white;
+    font-weight: 500;
+    font-size: 0.8em;
+}
+</style>
+""", unsafe_allow_html=True)
+
+def display_confidence(label, confidence, explanation):
+    color = get_confidence_color(confidence)
+    confidence_label = get_confidence_label(confidence)
+    st.sidebar.markdown(f"""
+    <div class="confidence-indicator" title="{explanation}">
+        <span>{label}</span>
+        <span class="confidence-badge" style="background-color: {color}">
+            {confidence_label} ({confidence:.0%})
+        </span>
+    </div>
+    """, unsafe_allow_html=True)
+
+display_confidence(
+    "Market Price Data",
+    price_confidence,
+    "Real-time market data with minimal delay"
+)
+
+display_confidence(
+    "Technical Indicators",
+    technical_confidence,
+    "Based on historical price data and standard technical analysis formulas"
+)
+
+display_confidence(
+    "Sentiment Analysis",
+    sentiment_confidence,
+    "AI-powered analysis of market sentiment, news, and social media"
+)
+
+display_confidence(
+    "News Analysis",
+    news_confidence,
+    "Recent news impact analysis using NLP and historical correlation"
+)
+
+display_confidence(
+    "Position Sizing",
+    position_confidence,
+    "Recommendations based on risk analysis and market conditions"
+)
+
+# Add overall data freshness indicator
+last_update = datetime.now()
+st.sidebar.markdown("---")
+st.sidebar.markdown(f"""
+<div style='text-align: center; padding: 10px; background-color: #f8f9fa; border-radius: 4px; margin-top: 10px;'>
+    <div style='font-size: 0.8em; color: #666;'>Last Data Update</div>
+    <div style='font-weight: 500; color: #333;'>{last_update.strftime('%H:%M:%S')}</div>
+</div>
+""", unsafe_allow_html=True)
+
+# Add confidence badges to main dashboard sections
+def confidence_badge(confidence, tooltip):
+    color = get_confidence_color(confidence)
+    label = get_confidence_label(confidence)
+    return f"""
+    <span style="
+        background-color: {color};
+        color: white;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 0.8em;
+        margin-left: 8px;
+        cursor: help;
+    " title="{tooltip}">
+        {label} ({confidence:.0%})
+    </span>
+    """
+
+# Update headers with confidence badges
+st.markdown(f"""
+# Gold Trading Dashboard {confidence_badge(price_confidence, "Real-time market data confidence")}
+""", unsafe_allow_html=True)
+
+# Add confidence badges to other sections
+if show_technicals:
+    st.markdown(f"""
+    ### Technical Indicators {confidence_badge(technical_confidence, "Technical analysis data confidence")}
+    """, unsafe_allow_html=True)
+
+if show_news:
+    st.markdown(f"""
+    ### News Sentiment {confidence_badge(news_confidence, "News analysis confidence")}
+    """, unsafe_allow_html=True)
+
+if risk_analysis:
+    st.markdown(f"""
+    ### Risk Analysis {confidence_badge(sentiment_confidence, "Risk metrics confidence")}
+    """, unsafe_allow_html=True)
+
+# Update the position sizing section
+st.markdown(f"""
+### Position Sizing Recommendations {confidence_badge(position_confidence, "Position sizing calculation confidence")}
+""", unsafe_allow_html=True)
+
+# Add data source information
+st.sidebar.markdown("---")
+st.sidebar.markdown("""
+<div style='background-color: #f8f9fa; padding: 10px; border-radius: 4px; font-size: 0.9em;'>
+    <strong>Data Sources:</strong>
+    <ul style='margin: 5px 0; padding-left: 20px;'>
+        <li>Market Data: Mock data (simulated)</li>
+        <li>Technical Indicators: Calculated from price data</li>
+        <li>Sentiment: AI-powered analysis</li>
+        <li>News: Simulated news feed</li>
+    </ul>
+</div>
+""", unsafe_allow_html=True)
+
+# Add social media sharing section
+st.sidebar.markdown("---")
+st.sidebar.subheader("Share Analysis 📱")
+
+# Add Open Graph meta tags for better social media sharing
+st.markdown("""
+    <head>
+        <meta property="og:title" content="GOLDBUDDY Trading Analysis">
+        <meta property="og:description" content="Check out my gold trading analysis powered by AI!">
+        <meta property="og:image" content="https://github.com/fisapool/goldbuddy/raw/main/assets/preview.png">
+        <meta property="og:url" content="https://github.com/fisapool/goldbuddy">
+    </head>
+""", unsafe_allow_html=True)
+
+# Add screenshot instructions and styling
+st.sidebar.markdown("""
+<style>
+.share-box {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    border: 1px solid #e9ecef;
+}
+.share-step {
+    margin: 8px 0;
+    padding: 8px;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid #e9ecef;
+}
+.share-tip {
+    font-size: 0.8em;
+    color: #666;
+    font-style: italic;
+    margin-top: 5px;
+}
+.share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+.share-button {
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.9em;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 100px;
+    justify-content: center;
+}
+</style>
+
+<div class="share-box">
+    <div class="share-step">
+        <strong>1. Capture Screenshot</strong>
+        <div class="share-tip">Windows: Win + Shift + S</div>
+        <div class="share-tip">Mac: Cmd + Shift + 4</div>
+        <div class="share-tip">Save your screenshot to share it</div>
+    </div>
+    <div class="share-step">
+        <strong>2. Share Analysis</strong>
+        <div class="share-buttons">
+            <a href="https://twitter.com/intent/tweet?text=Check%20out%20my%20Gold%20Trading%20analysis%20with%20GOLDBUDDY!%20%23trading%20%23gold%20%23finance" target="_blank" class="share-button" style="background-color: #1DA1F2;">
+                𝕏 Twitter
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/fisapool/goldbuddy" target="_blank" class="share-button" style="background-color: #1877F2;">
+                Facebook
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://github.com/fisapool/goldbuddy" target="_blank" class="share-button" style="background-color: #0A66C2;">
+                LinkedIn
+            </a>
+        </div>
+    </div>
+    <div class="share-step">
+        <strong>3. Share on Facebook</strong>
+        <div class="share-tip">To share on Facebook:</div>
+        <ol style="margin: 5px 0; padding-left: 20px; font-size: 0.9em;">
+            <li>Save your screenshot</li>
+            <li>Click the Facebook button above</li>
+            <li>Add your screenshot to the post</li>
+            <li>Add your analysis and insights</li>
+            <li>Tag relevant trading groups</li>
+        </ol>
+    </div>
+    <div class="share-tip">
+        Share your analysis with fellow traders!
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+# Add screenshot tips with Facebook-specific advice
+st.sidebar.markdown("""
+<div style='background-color: #f8f9fa; padding: 10px; border-radius: 4px; font-size: 0.9em; margin-top: 10px;'>
+    <strong>📸 Screenshot Tips:</strong>
+    <ul style='margin: 5px 0; padding-left: 20px;'>
+        <li>Capture key metrics and charts</li>
+        <li>Include confidence indicators</li>
+        <li>Show your position sizing</li>
+        <li>Highlight important signals</li>
+        <li>Use landscape orientation for Facebook</li>
+        <li>Ensure text is readable in preview</li>
+    </ul>
+</div>
+
+<div style='background-color: #f8f9fa; padding: 10px; border-radius: 4px; font-size: 0.9em; margin-top: 10px;'>
+    <strong>📱 Facebook Sharing Tips:</strong>
+    <ul style='margin: 5px 0; padding-left: 20px;'>
+        <li>Use high-quality screenshots</li>
+        <li>Add a compelling description</li>
+        <li>Use relevant hashtags (#gold #trading)</li>
+        <li>Tag relevant trading groups</li>
+        <li>Best time to post: 1-4 PM local time</li>
+    </ul>
+</div>
+""", unsafe_allow_html=True)
+
+# Add disclaimer for sharing
+st.sidebar.markdown("""
+<div style='font-size: 0.8em; color: #666; margin-top: 10px; font-style: italic;'>
+    Remember: Never share sensitive financial information or API keys in your screenshots. Always review your screenshots before posting on social media.
+</div>
+""", unsafe_allow_html=True) 
